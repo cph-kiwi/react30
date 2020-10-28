@@ -1,0 +1,26 @@
+{
+  "name": "react30",
+  "version": "1.0.0",
+  "description": "Rewrite javascript30 projects using React",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cph-kiwi/react30.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cph-kiwi/react30/issues"
+  },
+  "homepage": "https://github.com/cph-kiwi/react30#readme",
+  "dependencies": {
+    "next": "^9.5.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
