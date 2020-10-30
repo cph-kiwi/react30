@@ -1,6 +1,8 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import Metronome from "../components/Metronome";
+import Footer from "../components/Footer";
 
 const letters = [
   { letter: "A", sound: "clap", keyCode: 65 },
@@ -37,19 +39,15 @@ const Drumkit = () => {
   }, [playSound]);
 
   return (
-    <div>
+    <div className="body">
       <Head>
         <title>Drum kit</title>
       </Head>
-      <ul>
-        <li>
-          <Link href="/">
-            <a className="nav-link">Home</a>
-          </Link>
-        </li>
-      </ul>
-      <h1>Drum kit</h1>
-      <div className="container">
+      <Navbar />
+      <div className="heading">
+        <h1>Drum kit</h1>
+      </div>
+      <div className="keys-container">
         <div className="keys">
           {letters.map((letter) => {
             return (
@@ -59,7 +57,10 @@ const Drumkit = () => {
                   itemsPlaying[letter.keyCode] ? "playing" : ""
                 }`}
                 onTransitionEnd={() => {
-                  setItemsPlaying({ ...itemsPlaying, [letter.keyCode]: false });
+                  setItemsPlaying({
+                    ...itemsPlaying,
+                    [letter.keyCode]: false,
+                  });
                 }}
               >
                 <kbd>{letter.letter}</kbd>
@@ -68,67 +69,72 @@ const Drumkit = () => {
             );
           })}
         </div>
-
-        <audio data-key="65" src="/sounds/clap.wav"></audio>
-        <audio data-key="83" src="/sounds/hihat.wav"></audio>
-        <audio data-key="68" src="/sounds/kick.wav"></audio>
-        <audio data-key="70" src="/sounds/openhat.wav"></audio>
-        <audio data-key="71" src="/sounds/boom.wav"></audio>
-        <audio data-key="72" src="/sounds/ride.wav"></audio>
-        <audio data-key="74" src="/sounds/snare.wav"></audio>
-        <audio data-key="75" src="/sounds/tom.wav"></audio>
-        <audio data-key="76" src="/sounds/tink.wav"></audio>
       </div>
+      <Metronome />
+      <Footer />
+
+      <audio data-key="65" src="/sounds/clap.wav"></audio>
+      <audio data-key="83" src="/sounds/hihat.wav"></audio>
+      <audio data-key="68" src="/sounds/kick.wav"></audio>
+      <audio data-key="70" src="/sounds/openhat.wav"></audio>
+      <audio data-key="71" src="/sounds/boom.wav"></audio>
+      <audio data-key="72" src="/sounds/ride.wav"></audio>
+      <audio data-key="74" src="/sounds/snare.wav"></audio>
+      <audio data-key="75" src="/sounds/tom.wav"></audio>
+      <audio data-key="76" src="/sounds/tink.wav"></audio>
+
       <style jsx>{`
-        ul {
-          list-style: none;
-        }
-
-        ul li {
-          margin-right: 20px;
-          display: inline;
-          justify: center;
-        }
-
-        ul li a {
-          text-decoration: none;
-        }
-
-        .container {
-          font-size: 10px;
-          background: url("/drumkitBackgroundImage.jpg") bottom center;
+        .body {
+          background: url("/drumkitBackgroundImage2.jpg") bottom center;
           background-size: cover;
           margin: 0;
           padding: 0;
-          font-family: sans-serif;
+          font-family: "Roboto Mono", monospace;
+          --pink: #f2545b;
+          --dusty-rose: #a4243b;
+          --plum: #781b2b;
+          --burgondy: #4b111b;
+          --black: #090c08;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        .heading {
+          display: flex;
+          text-align: center;
+        }
+
+        h1 {
+          flex: 1;
         }
 
         .keys {
           display: flex;
           flex: 1;
-          min-height: 100vh;
-          align-items: center;
           justify-content: center;
+          padding-top: 50px;
         }
 
         .key {
-          border: 0.4rem solid black;
+          border: 0.4rem solid var(--burgondy);
           border-radius: 0.5rem;
           margin: 1rem;
           font-size: 1.5rem;
           padding: 1rem 0.5rem;
           transition: all 0.07s ease;
           width: 10rem;
+          height: 80px;
           text-align: center;
-          color: white;
+          color: var(--pink);
           background: rgba(0, 0, 0, 0.4);
           text-shadow: 0 0 0.5rem black;
         }
 
         .playing {
           transform: scale(1.1);
-          border-color: #ffc600;
-          box-shadow: 0 0 1rem #ffc600;
+          border-color: var(--dusty-rose);
+          box-shadow: 0 0 1rem var(--plum);
         }
 
         kbd {
@@ -140,7 +146,7 @@ const Drumkit = () => {
           font-size: 1.2rem;
           text-transform: uppercase;
           letter-spacing: 0.1rem;
-          color: #ffc600;
+          color: var(--pink);
         }
       `}</style>
     </div>
