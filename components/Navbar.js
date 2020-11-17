@@ -32,6 +32,10 @@ const Navbar = () => {
           text-decoration: none;
         }
 
+        .nav-link {
+          font-size: 14px;
+        }
+
         ul li a:visited {
           color: black;
         }

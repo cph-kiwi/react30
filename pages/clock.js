@@ -1,9 +1,25 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Clock = () => {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const interval = 1000;
+    const clock = setInterval(() => {
+      setNow(new Date());
+    }, interval);
+    return () => {
+      clearInterval(clock);
+    };
+  }, []);
+
+  const seconds = now.getSeconds();
+  const minutes = now.getMinutes();
+  const hour = now.getHours();
+
   return (
     <div className="body">
       <Head>
@@ -14,12 +30,32 @@ const Clock = () => {
         <h1>Clock</h1>
       </div>
       <div className="clock-container">
-        <div class="clock-face">
-          <div class="hand hour-hand"></div>
-          <div class="hand min-hand"></div>
-          <div class="hand second-hand"></div>
+        <div className="clock-face">
+          <div
+            className="hand hour-hand"
+            style={{
+              transform: `rotate(${
+                (hour / 12) * 360 + (minutes / 60) * 30 + 90
+              }deg)`,
+            }}
+          ></div>
+          <div
+            className="hand min-hand"
+            style={{
+              transform: `rotate(${
+                (minutes / 60) * 360 + (seconds / 60) * 6 + 90
+              }deg)`,
+            }}
+          ></div>
+          <div
+            className="hand second-hand"
+            style={{
+              transform: `rotate(${(seconds / 60) * 360 + 90}deg)`,
+            }}
+          ></div>
         </div>
       </div>
+      {now.toString()}
       <Footer />
       <style jsx>{`
         .body {
