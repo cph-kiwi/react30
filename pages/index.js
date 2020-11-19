@@ -15,8 +15,13 @@ const Index = () => (
         </Link>
       </li>
       <li>
-        <Link href="/clock">
-          <a className="nav-link">Clock</a>
+        <Link href="/clocks">
+          <a className="nav-link">Clocks</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/variables">
+          <a className="nav-link">Scoped CSS Variables and JS</a>
         </Link>
       </li>
     </ul>
