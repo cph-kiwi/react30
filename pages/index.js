@@ -21,7 +21,12 @@ const Index = () => (
       </li>
       <li>
         <Link href="/variables">
-          <a className="nav-link">Scoped CSS Variables and JS</a>
+          <a className="nav-link">CSS Variables</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/flex-panels-image-gallery">
+          <a className="nav-link">Flex panels image gallery</a>
         </Link>
       </li>
     </ul>

@@ -1,22 +1,32 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Variables = () => {
+  const [blur, setBlur] = useState(0);
+  const [spacing, setSpacing] = useState(0);
+  const [color, setColor] = useState("#ffc600");
+
+  useEffect(() => {}, [blur]);
+
+  useEffect(() => {}, [spacing]);
+
+  useEffect(() => {}, [color]);
+
   return (
     <div className="body">
       <Head>
-        <title>Variables</title>
+        <title>CSS Variables</title>
       </Head>
       <Navbar />
       <div className="heading">
-        <h1>Scoped CSS Variables and JS</h1>
+        <h1>Scoped CSS Variables</h1>
       </div>
 
       <div className="container">
         <h2>
-          Update CSS Variables with <span className="hl">JS</span>
+          Update CSS Variables with <span className="hl">React</span>
         </h2>
 
         <div className="controls">
@@ -27,8 +37,9 @@ const Variables = () => {
             name="spacing"
             min="10"
             max="200"
-            value="10"
+            value={spacing}
             data-unit="px"
+            onChange={(e) => setSpacing(e.target.value)}
           />
 
           <label for="blur">Blur:</label>
@@ -38,28 +49,29 @@ const Variables = () => {
             name="blur"
             min="0"
             max="25"
-            value="10"
+            value={blur}
             data-unit="px"
+            onChange={(e) => setBlur(e.target.value)}
           />
 
           <label for="base">Base Color</label>
-          <input id="base" type="color" name="base" value="#ffc600" />
+          <input
+            id="base"
+            type="color"
+            name="base"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
         </div>
 
-        <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
+        <img src="http://placekitten.com/200/300" />
       </div>
       <Footer />
       <style jsx>{`
-        :root {
-          --base: #ffc600;
-          --spacing: 10px;
-          --blur: 10px;
-          filter: blur(var(--blur));
-        }
-
         img {
           padding: var(--spacing);
           background: var(--base);
+          filter: blur(var(--blur));
         }
 
         .hl {
@@ -70,7 +82,11 @@ const Variables = () => {
       misc styles, nothing to do with CSS variables
     */
 
-        body {
+        .body {
+          --base: ${color};
+          --spacing: ${spacing}px;
+          --blur: ${blur}px;
+          position: relative;
         }
 
         .heading {
