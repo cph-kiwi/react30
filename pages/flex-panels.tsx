@@ -7,7 +7,7 @@ import styled, { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
         html {
           box-sizing: border-box;
-          background: #ffc600;
+          background: #ffd1dc;
           font-family: "helvetica neue";
           font-size: 20px;
           font-weight: 200;
@@ -121,6 +121,7 @@ const Panel = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
   & > * {
     margin: 0;
     width: 100%;

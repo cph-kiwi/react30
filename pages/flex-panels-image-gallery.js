@@ -15,6 +15,9 @@ const Flexpanels = () => {
         <title>Flex Panels Image Gallery</title>
       </Head>
       <Navbar />
+      <div className="heading">
+        <h1>Flex Panels Image Gallery</h1>
+      </div>
       <body>
         <div className="panels">
           <FlexPanel img="https://source.unsplash.com/gYl-UtwNg_I/1500x1500">
@@ -66,6 +69,15 @@ const Flexpanels = () => {
         *:before,
         *:after {
           box-sizing: inherit;
+        }
+
+        .heading {
+          display: flex;
+          text-align: center;
+        }
+
+        h1 {
+          flex: 1;
         }
 
         .panels {

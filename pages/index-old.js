@@ -29,6 +29,11 @@ const Index = () => (
           <a className="nav-link">Flex panels image gallery</a>
         </Link>
       </li>
+      <li>
+        <Link href="/type-ahead">
+          <a className="nav-link">Type ahead</a>
+        </Link>
+      </li>
     </ul>
     <style jsx>{`
       ul {
