@@ -1,14 +1,81 @@
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styled, { createGlobalStyle } from "styled-components";
 
-const GlobalStyles = createGlobalStyle``;
+const GlobalStyles = createGlobalStyle`
+html {
+          box-sizing: border-box;
+          background: #ffd1dc;
+          font-family: "helvetica neue";
+          font-size: 20px;
+          font-weight: 200;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-content: center;
+        }
+
+        body {
+          margin: 0;
+        }
+
+        *,
+        *:before,
+        *:after {
+          box-sizing: inherit;
+        }
+`;
 
 const Canvas = () => {
+  const canvasref = useRef<HTMLCanvasElement>(null);
+  const context =
+    canvasref.current === null ? null : canvasref.current.getContext("2d");
+
+  useEffect(() => {
+    if (!context) return;
+    context.strokeStyle = "#7fffd4";
+    context.lineJoin = "round";
+    context.lineCap = "round";
+    context.lineWidth = 20;
+  }, [context]);
+
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [lastX, setLastX] = useState(0);
+  const [lastY, setLastY] = useState(0);
+
+  const [hue, setHue] = useState(0);
+  const [thickness, setThickness] = useState(true);
+
+  function draw(e: MouseEvent<HTMLCanvasElement>) {
+    if (!isDrawing || !context) return;
+    const offsetX = e.clientX - (canvasref.current?.offsetLeft ?? 0);
+    const offsetY = e.clientY - (canvasref.current?.offsetTop ?? 0);
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    context.beginPath();
+    context.moveTo(lastX, lastY);
+    context.lineTo(offsetX, offsetY);
+    context.stroke();
+
+    setLastX(offsetX);
+    setLastY(offsetY);
+    setHue(hue + 1 >= 360 ? 0 : hue + 1);
+    const newThickness =
+      context.lineWidth >= 100 || context.lineWidth <= 1
+        ? !thickness
+        : thickness;
+    setThickness(newThickness);
+    if (newThickness) {
+      context.lineWidth++;
+    } else {
+      context.lineWidth--;
+    }
+  }
+
   return (
-    <div>
+    <Wrapper>
       <GlobalStyles />
       <Head>
         <title>Canvas</title>
@@ -17,8 +84,29 @@ const Canvas = () => {
       <Heading>
         <h1>Canvas</h1>
       </Heading>
+      <DrawArea
+        id="draw"
+        ref={canvasref}
+        width={500}
+        height={500}
+        onMouseMove={draw}
+        onMouseDown={(e) => {
+          setIsDrawing(true);
+          const offsetX = e.clientX - (canvasref.current?.offsetLeft ?? 0);
+          const offsetY = e.clientY - (canvasref.current?.offsetTop ?? 0);
+          setLastX(offsetX);
+          setLastY(offsetY);
+        }}
+        onMouseUp={(e) => {
+          setIsDrawing(false);
+        }}
+        onMouseOut={(e) => {
+          setIsDrawing(false);
+        }}
+      ></DrawArea>
+      <a href={canvasref.current?.toDataURL("image/png")}>Download</a>
       <Footer />
-    </div>
+    </Wrapper>
   );
 };
 
@@ -31,17 +119,22 @@ const Heading = styled.div`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const DrawArea = styled.canvas`
+  width: 500px;
+  height: 500px;
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: white;
+`;
+
 export default Canvas;
 
 /*
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>HTML5 Canvas</title>
-  </head>
-  <body>
-    <canvas id="draw" width="800" height="800"></canvas>
     <script>
       const canvas = document.querySelector("#draw"); // grab the canvas
       const context = canvas.getContext("2d"); // set up the context
@@ -104,14 +197,4 @@ export default Canvas;
       canvas.addEventListener("mouseup", () => (isDrawing = false));
       canvas.addEventListener("mouseout", () => (isDrawing = false)); // when the mouse goes out of the window, the drawing ends
     </script>
-
-    <style>
-      html,
-      body {
-        margin: 0;
-      }
-    </style>
-  </body>
-</html>
-
 */

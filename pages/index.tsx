@@ -77,6 +77,11 @@ function Index() {
             <a className="nav-link">Canvas</a>
           </Link>
         </li>
+        <li>
+          <Link href="/check-multiple-checkboxes">
+            <a className="nav-link">Hold shift and check multiple checkboxes</a>
+          </Link>
+        </li>
       </UnorderedList>
     </div>
   );
